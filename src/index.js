@@ -58,15 +58,6 @@ function App() {
   );
 }
 //another component but it is not being rendered as the App component is being rendered as written below but its ui can be render as it is declared in the App component
-function Pizza() {
-  return (
-    <div>
-      <img src="../pizzas/funghi.jpg" alt="Pizza Funghi"></img>
-      <h3>Pizza Funghi</h3>
-      <p>Bread with italian olive oil and rosemary</p>
-    </div>
-  );
-}
 function Header() {
   const style = {};
   return (
@@ -88,10 +79,32 @@ function Menu() {
   return (
     <main className="menu">
       <h2>Our menu</h2>
-      <Pizza />
-      <Pizza />
-      <Pizza />
+      <Pizza
+        name="Pizza Funghi"
+        ingredients="tomato, mushrooms"
+        // price="12" passed as an string we want this as an number so do this
+        price={12}
+        photoName="../pizzas/funghi.jpg"
+      />
+      <Pizza
+        name="Pizza Spinaci"
+        ingredients="tomato, mushrooms"
+        price={12}
+        photoName="../pizzas/spinaci.jpg"
+      />
     </main>
+  );
+}
+function Pizza(props) {
+  return (
+    <div className="pizza">
+      <img src={props.photoName} alt={props.name}></img>
+      <div>
+        <h3>{props.name}</h3>
+        <p>{props.ingredients}</p>
+        <span>{props.price + 4}</span>
+      </div>
+    </div>
   );
 }
 function Footer() {
