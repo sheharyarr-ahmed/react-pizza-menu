@@ -1,5 +1,6 @@
 import React from "react"; //adding the libraries
 import ReactDOM from "react-dom/client";
+import "../src/index.css";
 
 const pizzaData = [
   {
@@ -49,7 +50,7 @@ const pizzaData = [
 function App() {
   //the component
   return (
-    <div>
+    <div className="container">
       <Header />
       <Menu />
       <Footer />
@@ -61,27 +62,55 @@ function Pizza() {
   return (
     <div>
       <img src="../pizzas/funghi.jpg" alt="Pizza Funghi"></img>
-      <h2>Pizza Funghi</h2>
+      <h3>Pizza Funghi</h3>
       <p>Bread with italian olive oil and rosemary</p>
     </div>
   );
 }
 function Header() {
-  return <h1>La Pizza React</h1>;
-}
-function Menu() {
+  const style = {};
   return (
-    <div>
+    <header className="header">
+      <h1 style={style}>La Pizza React</h1>
+    </header>
+  );
+}
+//this code is the perfect exmaple of embeding js and css in jsx
+// function Header() {
+//   return (
+//     <h1 style={{ color: "red", textTransform: "uppercase", fontSize: "48px" }}>
+//       La Pizza React
+//     </h1>
+//   );
+// }
+function Menu() {
+  //example of an nested component
+  return (
+    <main className="menu">
       <h2>Our menu</h2>
       <Pizza />
       <Pizza />
       <Pizza />
-    </div>
+    </main>
   );
 }
 function Footer() {
+  //react will use use this jsx and in this jsx it cna be seen that there is an java-script and html are embed and react can use it
+
+  ///using javascript
+  const hour = new Date().getHours();
+  const openHour = 1;
+  const closeHour = 10;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
+
+  //   if (hour >= openHour && hour <= closeHour) alert("We're currently open");
+  //   else alert("Sorry, We're currently closed");
   return (
-    <footer> {new Date().toLocaleTimeString()} We're currently open</footer>
+    <footer className="footer">
+      {" "}
+      {new Date().toLocaleTimeString()} We're currently open
+    </footer>
   );
 }
 
