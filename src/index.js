@@ -50,10 +50,9 @@ function App() {
   //the component
   return (
     <div>
-      <h1>HELLO REACT</h1>
-      <Pizza />
-      <Pizza />
-      <Pizza />
+      <Header />
+      <Menu />
+      <Footer />
     </div>
   );
 }
@@ -65,6 +64,24 @@ function Pizza() {
       <h2>Pizza Funghi</h2>
       <p>Bread with italian olive oil and rosemary</p>
     </div>
+  );
+}
+function Header() {
+  return <h1>La Pizza React</h1>;
+}
+function Menu() {
+  return (
+    <div>
+      <h2>Our menu</h2>
+      <Pizza />
+      <Pizza />
+      <Pizza />
+    </div>
+  );
+}
+function Footer() {
+  return (
+    <footer> {new Date().toLocaleTimeString()} We're currently open</footer>
   );
 }
 
