@@ -76,29 +76,63 @@ function Header() {
 // }
 function Menu() {
   const pizzas = pizzaData;
+  // const pizzas = [];
+  const numPizzas = pizzas.length;
+
   //example of an nested component
+  // using the rederlist list with &&
+  // return (
+  //   <main className="menu">
+  //     <h2>Our menu</h2>
+  //     {pizzas && (
+  //       <ul className="pizzas">
+  //         {pizzas.map((pizza) => (
+  //           <Pizza pizzaObj={pizza} key={pizza.name} />
+  //         ))}
+  //       </ul>
+  //     )}
+  //   </main>
+  // );
+  // redering the component with ternary
   return (
     <main className="menu">
       <h2>Our menu</h2>
-      {pizzas && (
-        <ul className="pizzas">
-          {pizzas.map((pizza) => (
-            <Pizza pizzaObj={pizza} key={pizza.name} />
-          ))}
-        </ul>
+      {/* <p>
+        Authentic Italian cuisine. 6 creative dishes to choose from, All from
+        our stone oven, all organic, all delicious
+      </p> */}
+      {numPizzas > 0 ? (
+        // the empty tags are called react fragments what they ussually do is that React Fragments let you group multiple elements without adding an extra wrapper element like a <div> to the DOM.
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creative dishes to choose from, All
+            from our stone oven, all organic, all delicious
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>We're still working on our menu. Please come back later.</p>
       )}
     </main>
   );
 }
-function Pizza(props) {
-  if (props.pizzaObj.soldOut) return null; //this snippet is an example of multiple returns from an component out of the jsx
+// here we destructured the props as destructure the recieving props in to the {pizzaObj} inside the aprameter of the pizza component.
+// Props are always passed as an object to components. Instead of writing props.something repeatedly, you can directly unpack the properties you need using destructuring. This makes code cleaner and easier to read. we added the pizzaObj as an prop in the menu component
+function Pizza({ pizzaObj }) {
+  // if (pizzaObj.soldOut) return null; //this snippet is an example of multiple returns from an component out of the jsx
   return (
-    <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name}></img>
+    // setting classes conditionally
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name}></img>
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price + 4}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        {/* setting classes conditionally  */}
+        <span>{pizzaObj.soldOut ? "SOLD-OUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -109,11 +143,11 @@ function Footer() {
   //extracting components jsx into a new component, here its done in the footer component
 
   ///using javascript
-  const hour = new Date().getHours();
+  // const hour = new Date().getHours();
   const openHour = 11;
   const closeHour = 22;
-  // const isOpen = true
-  const isOpen = hour >= openHour && hour <= closeHour;
+  const isOpen = true;
+  // const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
   //   if (hour >= openHour && hour <= closeHour) alert("We're currently open");
@@ -136,7 +170,7 @@ function Footer() {
   return (
     <footer className="footer">
       {isOpen ? (
-        <Order closeHour={closeHour} />
+        <Order closeHour={closeHour} openHour={openHour} />
       ) : (
         <p>
           We're happy to welcome you between {openHour}:00 and {closeHour}:00
@@ -146,11 +180,12 @@ function Footer() {
   );
 }
 // the order component is being extracted into the footer component
-function Order(props) {
+function Order({ closeHour, openHour }) {
   return (
     <div className="order">
       <p>
-        We're open until {props.closeHour}:00. Come visit us or order online.
+        We're open until {closeHour}:00. Come visit us or order online. The
+        opening time is {openHour}
       </p>
       <button className="btn">Order</button>
     </div>
