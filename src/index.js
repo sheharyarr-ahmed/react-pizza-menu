@@ -75,36 +75,31 @@ function Header() {
 //   );
 // }
 function Menu() {
+  const pizzas = pizzaData;
   //example of an nested component
   return (
     <main className="menu">
       <h2>Our menu</h2>
-      <Pizza
-        name="Pizza Funghi"
-        ingredients="tomato, mushrooms"
-        // price="12" passed as an string we want this as an number so do this
-        price={12}
-        photoName="../pizzas/funghi.jpg"
-      />
-      <Pizza
-        name="Pizza Spinaci"
-        ingredients="tomato, mushrooms"
-        price={12}
-        photoName="../pizzas/spinaci.jpg"
-      />
+      {pizzas && (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )}
     </main>
   );
 }
 function Pizza(props) {
   return (
-    <div className="pizza">
-      <img src={props.photoName} alt={props.name}></img>
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name}></img>
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
-        <span>{props.price + 4}</span>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span>{props.pizzaObj.price + 4}</span>
       </div>
-    </div>
+    </li>
   );
 }
 function Footer() {
@@ -112,8 +107,8 @@ function Footer() {
 
   ///using javascript
   const hour = new Date().getHours();
-  const openHour = 1;
-  const closeHour = 10;
+  const openHour = 11;
+  const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
@@ -121,8 +116,16 @@ function Footer() {
   //   else alert("Sorry, We're currently closed");
   return (
     <footer className="footer">
-      {" "}
-      {new Date().toLocaleTimeString()} We're currently open
+      {isOpen ? (
+        <div className="order">
+          <p>We're open until {closeHour}:00. Come visit us or order online.</p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <p>
+          We're happy to welcome you between {openHour}:00 and {closeHour}:00
+        </p>
+      )}
     </footer>
   );
 }
