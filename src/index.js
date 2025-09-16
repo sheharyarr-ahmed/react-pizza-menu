@@ -106,28 +106,54 @@ function Pizza(props) {
 function Footer() {
   //react will use use this jsx and in this jsx it cna be seen that there is an java-script and html are embed and react can use it
 
+  //extracting components jsx into a new component, here its done in the footer component
+
   ///using javascript
   const hour = new Date().getHours();
   const openHour = 11;
   const closeHour = 22;
+  // const isOpen = true
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
   //   if (hour >= openHour && hour <= closeHour) alert("We're currently open");
   //   else alert("Sorry, We're currently closed");
+  // beneath code is an example of rendering with ternary operator
+  // return (
+  //   <footer className="footer">
+  //     {isOpen ? (
+  //       <div className="order">
+  //         <p>We're open until {closeHour}:00. Come visit us or order online.</p>
+  //         <button className="btn">Order</button>
+  //       </div>
+  //     ) : (
+  //       <p>
+  //         We're happy to welcome you between {openHour}:00 and {closeHour}:00
+  //       </p>
+  //     )}
+  //   </footer>
+  // );
   return (
     <footer className="footer">
       {isOpen ? (
-        <div className="order">
-          <p>We're open until {closeHour}:00. Come visit us or order online.</p>
-          <button className="btn">Order</button>
-        </div>
+        <Order closeHour={closeHour} />
       ) : (
         <p>
           We're happy to welcome you between {openHour}:00 and {closeHour}:00
         </p>
       )}
     </footer>
+  );
+}
+// the order component is being extracted into the footer component
+function Order(props) {
+  return (
+    <div className="order">
+      <p>
+        We're open until {props.closeHour}:00. Come visit us or order online.
+      </p>
+      <button className="btn">Order</button>
+    </div>
   );
 }
 
